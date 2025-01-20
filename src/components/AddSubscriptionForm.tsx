@@ -76,7 +76,7 @@ const AddSubscriptionForm = ({ onSuccess }: AddSubscriptionFormProps) => {
         className="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
         placeholder={placeholder}
         required={isRequired}
-        autocomplete="off"
+        autoComplete="off"
       />
     </div>
   );

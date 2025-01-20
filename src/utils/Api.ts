@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5001/api",
+  baseURL: "https://saas-subscription-manager.onrender.com/",
 });
 
 API.interceptors.request.use((config:any) => {
