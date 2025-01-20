@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addSubscription } from "../utils/Api";
+import { addSubscription } from "../utils/api";
 
 interface AddSubscriptionFormProps {
   onSuccess: () => void;

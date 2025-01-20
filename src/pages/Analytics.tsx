@@ -9,7 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar, Pie } from "react-chartjs-2";
-import { getSubscriptions } from "../utils/Api";
+import { getSubscriptions } from "../utils/api";
 import { IoCalendarOutline, IoTimeOutline } from "react-icons/io5";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
