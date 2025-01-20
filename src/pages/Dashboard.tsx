@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getSubscriptions, deleteSubscription, updateSubscription } from "../utils/api";
+import { getSubscriptions, deleteSubscription, updateSubscription } from "../utils/Api";
 import SubscriptionCard from "../components/SubscriptionCard";
 import AddSubscriptionForm from "../components/AddSubscriptionForm";
 import { IoAdd, IoClose, IoDownload } from "react-icons/io5";
