@@ -9,7 +9,6 @@ const authRoutes = require('./routes/auth');
 dotenv.config();
 const app = express();
 
-const cors = require('cors');
 app.use(cors({
   origin: 'https://saas-subscription-manager-1.onrender.com/',
 }));
