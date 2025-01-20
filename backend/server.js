@@ -17,6 +17,10 @@ mongoose
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
+  app.get('/api', (req, res) => {
+    res.status(200).json({ message: 'API is running successfully!' });
+  });
+
 app.use('/api', authRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 
