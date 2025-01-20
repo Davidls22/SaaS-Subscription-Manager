@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getSubscriptions, deleteSubscription, updateSubscription } from "../utils/api";
 import SubscriptionCard from "../components/SubscriptionCard";
 import AddSubscriptionForm from "../components/AddSubscriptionForm";
-import { IoAdd, IoClose } from "react-icons/io5";
+import { IoAdd, IoClose, IoDownload } from "react-icons/io5";
+import { exportToExcel } from "../utils/exportToExcel";
 
 interface Subscription {
     _id: string;
@@ -57,13 +58,16 @@ const Dashboard = () => {
     }
   };
 
+  const handleExportToExcel = () => {
+    exportToExcel(subscriptions, "subscriptions");
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 lg:px-16">
 
       <header className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800">Subscriptions</h1>
-        <div>
-
+        <div className="flex items-center space-x-4">
           <select
             value={selectedCategory}
             onChange={handleCategoryChange}
@@ -76,6 +80,12 @@ const Dashboard = () => {
               </option>
             ))}
           </select>
+          <button
+            onClick={handleExportToExcel}
+            className="text-green-600 hover:text-green-800 p-2 rounded-full focus:outline-none"
+          >
+            <IoDownload size={24} />
+          </button>
         </div>
       </header>
 

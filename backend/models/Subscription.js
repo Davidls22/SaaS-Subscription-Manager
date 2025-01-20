@@ -7,6 +7,7 @@ const SubscriptionSchema = new mongoose.Schema({
   renewalDate: { type: Date, required: true },
   category: { type: String, required: true },
   notes: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
 module.exports = mongoose.model('Subscription', SubscriptionSchema);
