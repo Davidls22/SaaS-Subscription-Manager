@@ -4,7 +4,6 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-// Get all subscriptions for the logged-in user
 router.get('/', auth, async (req, res) => {
   try {
     const subscriptions = await Subscription.find({ user: req.user }); 
@@ -14,7 +13,6 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// Add a subscription for the logged-in user
 router.post('/', auth, async (req, res) => {
   try {
     const { name, cost, billingFrequency, renewalDate, category, notes } = req.body;
@@ -36,7 +34,6 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// Update a subscription for the logged-in user
 router.put('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
@@ -58,7 +55,6 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-// Delete a subscription for the logged-in user
 router.delete('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
