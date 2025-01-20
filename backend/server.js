@@ -9,9 +9,23 @@ const authRoutes = require('./routes/auth');
 dotenv.config();
 const app = express();
 
-app.use(cors({
-  origin: 'https://saas-subscription-manager-1.onrender.com/',
-}));
+const allowedOrigins = [
+  "https://saas-subscription-manager-1.onrender.com",
+  "https://saas-subscription-manager.onrender.com"
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, 
+  })
+);
 app.use(express.json());
 
 mongoose
