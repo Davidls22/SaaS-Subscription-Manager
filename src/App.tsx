@@ -26,17 +26,22 @@ function App() {
     <Router>
       {/* Navigation Bar */}
       <nav className="p-4 bg-gray-100 shadow-md">
-        <div className="max-w-7xl mx-auto flex justify-between">
-          <div>
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center">
+            <img
+              src="/logo.png"
+              alt="Company Logo"
+              className="w-40 h-10 mr-6 border border-gray-300 rounded shadow-sm mr-4"
+            />
             {isAuthenticated && (
-              <>
-                <Link to="/" className="text-blue-600 font-medium hover:underline mr-4">
+              <div className="flex space-x-4">
+                <Link to="/" className="text-blue-600 font-medium hover:underline">
                   Dashboard
                 </Link>
                 <Link to="/analytics" className="text-blue-600 font-medium hover:underline">
                   Analytics
                 </Link>
-              </>
+              </div>
             )}
           </div>
           <div>
@@ -48,19 +53,19 @@ function App() {
                 Logout
               </button>
             ) : (
-              <>
-                <Link to="/login" className="text-blue-600 font-medium hover:underline mr-4">
+              <div className="flex space-x-4">
+                <Link to="/login" className="text-blue-600 font-medium hover:underline">
                   Login
                 </Link>
                 <Link to="/register" className="text-blue-600 font-medium hover:underline">
                   Register
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>
       </nav>
-
+  
       <main className="p-8 bg-gray-50 min-h-screen">
         <div className="max-w-7xl mx-auto">
           <Routes>
