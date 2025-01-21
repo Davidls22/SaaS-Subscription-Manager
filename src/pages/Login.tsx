@@ -1,19 +1,22 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-function Login({ onLogin }:any) {
+function Login({ onLogin }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e:any) => {
+  const handleLogin = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://saas-subscription-manager.onrender.com/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://saas-subscription-manager.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -65,6 +68,14 @@ function Login({ onLogin }:any) {
           Login
         </button>
       </form>
+      <div className="mt-4 text-center">
+        <Link
+          to="/forgot-password"
+          className="text-blue-500 hover:underline text-sm"
+        >
+          Forgot Password?
+        </Link>
+      </div>
     </div>
   );
 }

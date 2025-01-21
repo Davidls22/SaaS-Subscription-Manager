@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Analytics from "./pages/Analytics";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -65,7 +66,7 @@ function App() {
             {/* Public Routes */}
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register />} />
-
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             {/* Private Routes */}
             <Route
               path="/"
