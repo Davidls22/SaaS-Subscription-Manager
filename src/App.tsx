@@ -5,6 +5,7 @@ import Analytics from "./pages/Analytics";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -80,6 +81,7 @@ function App() {
                 isAuthenticated ? <Analytics /> : <Navigate to="/login" />
               }
             />
+            <Route path="/reset-password/:token" element={isAuthenticated ? <ResetPassword /> : <Navigate to="/login" />} />
           </Routes>
         </div>
       </main>
