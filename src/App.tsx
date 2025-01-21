@@ -68,6 +68,7 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             {/* Private Routes */}
             <Route
               path="/"
@@ -81,7 +82,6 @@ function App() {
                 isAuthenticated ? <Analytics /> : <Navigate to="/login" />
               }
             />
-            <Route path="/reset-password/:token" element={isAuthenticated ? <ResetPassword /> : <Navigate to="/login" />} />
           </Routes>
         </div>
       </main>
