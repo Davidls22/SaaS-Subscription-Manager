@@ -9,4 +9,9 @@ export default defineConfig({
     emptyOutDir: true,
     chunkSizeWarningLimit: 500, 
   },
+  server: {
+    proxy: {
+      '/api': 'https://saas-subscription-manager.onrender.com', 
+    },
+  },
 })
