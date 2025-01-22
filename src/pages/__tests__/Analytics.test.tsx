@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Analytics from "../Analytics";
 import { getSubscriptions } from "../../utils/Api";
-import { vi } from "vitest";
+import { vi } from 'vitest';
 
 vi.mock("../../utils/Api", () => ({
   getSubscriptions: vi.fn(),
@@ -21,7 +21,7 @@ const mockSubscriptions = [
 describe("Analytics Component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    (getSubscriptions as vi.Mock).mockResolvedValue({ data: mockSubscriptions });
+    (getSubscriptions as jest.Mock).mockResolvedValue({ data: mockSubscriptions });
   });
 
   it("renders the Analytics component", async () => {
@@ -36,13 +36,12 @@ describe("Analytics Component", () => {
     await waitFor(() => expect(getSubscriptions).toHaveBeenCalledTimes(1));
   
     const totalSpend = screen.getByText((content, element) => {
-      const hasText = (node: Element) =>
-        node.textContent?.includes("Total Spend (Monthly): £25.00");
-      const elementHasText = hasText(element!);
-      const childrenDontHaveText = Array.from(element!.children).every(
-        (child) => !hasText(child)
+      if (!element) return false;
+      const hasText = element.textContent?.includes("Total Spend (Monthly): £25.00");
+      const childrenDontHaveText = Array.from(element.children).every(
+        (child) => !child.textContent?.includes("Total Spend (Monthly): £25.00")
       );
-      return elementHasText && childrenDontHaveText;
+      return !!hasText && childrenDontHaveText;
     });
     expect(totalSpend).toBeInTheDocument();
   });
@@ -55,13 +54,12 @@ describe("Analytics Component", () => {
     fireEvent.click(annualButton);
   
     const totalSpend = screen.getByText((content, element) => {
-      const hasText = (node: Element) =>
-        node.textContent?.includes("Total Spend (Annual): £300.00");
-      const elementHasText = hasText(element!);
-      const childrenDontHaveText = Array.from(element!.children).every(
-        (child) => !hasText(child)
+      if (!element) return false;
+      const hasText = element.textContent?.includes("Total Spend (Annual): £300.00");
+      const childrenDontHaveText = Array.from(element.children).every(
+        (child) => !child.textContent?.includes("Total Spend (Annual): £300.00")
       );
-      return elementHasText && childrenDontHaveText;
+      return !!hasText && childrenDontHaveText;
     });
     expect(totalSpend).toBeInTheDocument();
   });

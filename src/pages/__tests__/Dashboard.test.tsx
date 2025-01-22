@@ -2,6 +2,7 @@ import { render, screen, waitFor, fireEvent, act } from "@testing-library/react"
 import { vi } from "vitest";
 import Dashboard from "../Dashboard";
 import * as Api from "../../utils/Api"; 
+import { AxiosResponse, AxiosHeaders } from "axios"; 
 
 describe("Dashboard Page", () => {
   const mockGetSubscriptions = vi.spyOn(Api, "getSubscriptions").mockResolvedValue({
@@ -23,16 +24,16 @@ describe("Dashboard Page", () => {
         category: "Music",
       },
     ],
-  });
-
-  beforeEach(() => {
-    vi.clearAllMocks(); 
-  });
+    status: 200,
+    statusText: "OK",
+    headers: {},
+    config: {},
+  } as AxiosResponse);
 
   it("renders the Dashboard with header", async () => {
     await act(async () => {
-        render(<Dashboard />);
-      });
+      render(<Dashboard />);
+    });
     expect(screen.getByText("Subscriptions")).toBeInTheDocument();
   });
 
@@ -62,7 +63,13 @@ describe("Dashboard Page", () => {
   });
 
   it("displays a message when no subscriptions are found", async () => {
-    mockGetSubscriptions.mockResolvedValueOnce({ data: [] });
+    mockGetSubscriptions.mockResolvedValueOnce({ data: [], status: 200, statusText: "OK", headers: new AxiosHeaders(), 
+    config: {
+      headers: new AxiosHeaders(), 
+        method: "get", 
+        url: "/subscriptions", 
+        params: {}, 
+      }, });
 
     render(<Dashboard />);
 

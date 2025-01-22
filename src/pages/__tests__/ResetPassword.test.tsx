@@ -13,12 +13,24 @@ vi.mock("react-router-dom", async () => {
 describe("ResetPassword", () => {
   it("submits new password and redirects on success", async () => {
     global.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: true,
-        status: 200,
-        json: () => Promise.resolve({ message: "Password reset successfully" }),
-      })
-    );
+    Promise.resolve({
+      ok: true,
+      status: 200,
+      statusText: "OK",
+      headers: new Headers(),
+      redirected: false,
+      type: "default",
+      url: "http://localhost",
+      clone: () => this,
+      body: null,
+      bodyUsed: false,
+      text: async () => "",
+      arrayBuffer: async () => new ArrayBuffer(0),
+      blob: async () => new Blob(),
+      formData: async () => new FormData(),
+      json: async () => ({ message: "Password reset successfully" }),
+    })
+  ) as unknown as typeof fetch;
 
     const mockNavigate = vi.fn();
     render(<ResetPassword onNavigate={mockNavigate} />);
@@ -49,12 +61,24 @@ describe("ResetPassword", () => {
 
   it("shows error message when reset fails", async () => {
     global.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: false,
-        status: 400,
-        json: () => Promise.resolve({ error: "Invalid token" }),
-      })
-    );
+    Promise.resolve({
+      ok: false,
+      status: 400,
+      statusText: "Bad Request",
+      json: () => Promise.resolve({ error: "Invalid token" }),
+      headers: new Headers(),
+      redirected: false,
+      type: "default",
+      url: "http://localhost",
+      clone: () => this,
+      body: null,
+      bodyUsed: false,
+      text: async () => "",
+      arrayBuffer: async () => new ArrayBuffer(0),
+      blob: async () => new Blob(),
+      formData: async () => new FormData(),
+    })
+  ) as unknown as typeof fetch;
 
     render(<ResetPassword />);
 

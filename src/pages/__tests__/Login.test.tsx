@@ -25,11 +25,24 @@ describe("Login Page", () => {
     const onLogin = vi.fn();
 
     global.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({ token: "mock-token" }),
-      })
-    );
+    Promise.resolve({
+      ok: true,
+      status: 200,
+      statusText: "OK",
+      json: () => Promise.resolve({ token: "mock-token" }),
+      headers: new Headers(),
+      redirected: false,
+      type: "default",
+      url: "http://localhost",
+      clone: () => this,
+      body: null,
+      bodyUsed: false,
+      text: async () => "",
+      arrayBuffer: async () => new ArrayBuffer(0),
+      blob: async () => new Blob(),
+      formData: async () => new FormData(),
+    })
+  ) as unknown as typeof fetch;
 
     render(
       <BrowserRouter>

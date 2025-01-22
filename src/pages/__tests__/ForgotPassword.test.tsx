@@ -10,8 +10,8 @@ describe("ForgotPassword Page", () => {
 
   it("submits forgot password form", async () => {
     global.fetch = vi.fn(() =>
-      Promise.resolve({ ok: true, json: () => Promise.resolve({}) })
-    ) as jest.Mock;
+    Promise.resolve({ ok: true, json: () => Promise.resolve({}) })
+  ) as unknown as typeof fetch;
 
     render(<ForgotPassword />);
 

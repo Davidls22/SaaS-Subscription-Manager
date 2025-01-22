@@ -40,7 +40,6 @@ describe("exportToExcel", () => {
       { name: "Amazon Prime", cost: 80, billingFrequency: "annual", renewalDate: "2025-12-01", category: "Shopping" },
     ];
 
-   
     const { Workbook } = await import("exceljs");
     const mockWorkbookInstance = new Workbook(); 
     await exportToExcel(mockData, "subscriptions");
@@ -50,7 +49,9 @@ describe("exportToExcel", () => {
 
     expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), "subscriptions.xlsx");
 
-    const mockWorksheet = mockWorkbookInstance.addWorksheet.mock.results[0].value;
+    const addWorksheetMock = mockWorkbookInstance.addWorksheet as jest.Mock;
+    const mockWorksheet = addWorksheetMock.mock.results[0].value;
+
     expect(mockWorksheet.mergeCells).toHaveBeenCalledWith("A1:E1");
     expect(mockWorksheet.addRow).toHaveBeenCalled();
     expect(mockWorksheet.getCell).toHaveBeenCalledWith("A1");

@@ -1,27 +1,39 @@
 import { getSubscriptions, addSubscription, updateSubscription, deleteSubscription } from "../Api";
 import axios from "axios";
 import { vi } from "vitest";
+import type { AxiosInstance, AxiosInterceptorManager } from "axios";
 
 vi.mock("axios", () => {
-  const mockAxiosInstance = {
-    interceptors: {
-      request: {
-        use: vi.fn(),
+    const mockInterceptorManager: AxiosInterceptorManager<any> = {
+      use: vi.fn(),
+      eject: vi.fn(),
+      clear: vi.fn(),
+    };
+  
+    const mockAxiosInstance: Partial<AxiosInstance> = {
+      interceptors: {
+        request: mockInterceptorManager,
+        response: mockInterceptorManager,
       },
-      response: {
-        use: vi.fn(),
-      },
-    },
-    get: vi.fn(),
-    post: vi.fn(),
-    put: vi.fn(),
-    delete: vi.fn(),
-    create: vi.fn(() => mockAxiosInstance),
-  };
-  return {
-    default: mockAxiosInstance,
-  };
-});
+      get: vi.fn(),
+      post: vi.fn(),
+      put: vi.fn(),
+      delete: vi.fn(),
+    };
+  
+    const axiosMock = {
+      create: vi.fn(() => mockAxiosInstance as AxiosInstance),
+      interceptors: mockAxiosInstance.interceptors,
+      get: mockAxiosInstance.get,
+      post: mockAxiosInstance.post,
+      put: mockAxiosInstance.put,
+      delete: mockAxiosInstance.delete,
+    };
+  
+    return {
+      default: axiosMock,
+    };
+  });
 
 describe("API module", () => {
   const mockAxiosInstance = axios as unknown as jest.Mocked<typeof axios>;
