@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IoTrash, IoPencil, IoInformationCircleOutline, IoClose } from "react-icons/io5";
 
 interface SubscriptionCardProps {
   subscription: {
@@ -43,7 +44,6 @@ const SubscriptionCard = ({
             value={formData.name}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
-            aria-label="Edit Name"
           />
           <input
             type="number"
@@ -51,14 +51,12 @@ const SubscriptionCard = ({
             value={formData.cost}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
-            aria-label="Edit Cost"
           />
           <select
             name="billingFrequency"
             value={formData.billingFrequency}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
-            aria-label="Edit Billing Frequency"
           >
             <option value="monthly">Monthly</option>
             <option value="annual">Annual</option>
@@ -69,7 +67,6 @@ const SubscriptionCard = ({
             value={formData.renewalDate}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
-            aria-label="Edit Renewal Date"
           />
           <input
             type="text"
@@ -77,7 +74,6 @@ const SubscriptionCard = ({
             value={formData.category}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
-            aria-label="Edit Category"
           />
           <textarea
             name="notes"
@@ -85,22 +81,21 @@ const SubscriptionCard = ({
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
             placeholder="Notes"
-            aria-label="Edit Notes"
           ></textarea>
           <div className="flex justify-between mt-4">
             <button
               className="text-green-500 hover:text-green-700"
-              aria-label="Save"
+              aria-label="Save Changes"
               onClick={handleSave}
             >
-              Save
+              <IoPencil size={24} />
             </button>
             <button
               className="text-gray-500 hover:text-gray-700"
               aria-label="Cancel Edit"
               onClick={() => setIsEditing(false)}
             >
-              Close
+              <IoClose size={24} />
             </button>
           </div>
         </>
@@ -114,7 +109,7 @@ const SubscriptionCard = ({
                 aria-label="View Notes"
                 onClick={() => setShowNotesModal(true)}
               >
-                View Notes
+                <IoInformationCircleOutline size={24} />
               </button>
             )}
           </div>
@@ -127,14 +122,14 @@ const SubscriptionCard = ({
               aria-label="Edit Subscription"
               onClick={() => setIsEditing(true)}
             >
-              Edit Subscription
+              <IoPencil size={20} />
             </button>
             <button
               className="text-red-500 hover:text-red-700"
               aria-label="Delete Subscription"
               onClick={() => onDelete(subscription._id)}
             >
-              Delete Subscription
+              <IoTrash size={20} />
             </button>
           </div>
         </>
@@ -145,10 +140,10 @@ const SubscriptionCard = ({
           <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
             <button
               className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
-              aria-label="Close"
+              aria-label="Close Notes"
               onClick={() => setShowNotesModal(false)}
             >
-              Close
+              <IoClose size={24} />
             </button>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Notes</h3>
             <p className="text-gray-600">{subscription.notes}</p>

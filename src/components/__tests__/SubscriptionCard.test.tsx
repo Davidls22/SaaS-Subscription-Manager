@@ -50,7 +50,7 @@ describe("SubscriptionCard", () => {
     expect(screen.getByText("Notes")).toBeInTheDocument();
     expect(screen.getByText(mockSubscription.notes)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "Close" }));
+    fireEvent.click(screen.getByRole("button", { name: "Close Notes" }));
     expect(screen.queryByText("Notes")).not.toBeInTheDocument();
   });
 
@@ -67,7 +67,7 @@ describe("SubscriptionCard", () => {
     expect(screen.getByDisplayValue("Netflix")).toBeInTheDocument();
     expect(screen.getByDisplayValue("12.99")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "Cancel Edit" })); 
+    fireEvent.click(screen.getByRole("button", { name: "Cancel Edit" }));
     expect(screen.getByText("Netflix")).toBeInTheDocument();
   });
 
@@ -85,7 +85,7 @@ describe("SubscriptionCard", () => {
     const nameInput = screen.getByDisplayValue("Netflix");
     fireEvent.change(nameInput, { target: { value: "Hulu" } });
 
-    fireEvent.click(screen.getByRole("button", { name: "Save" }));
+    fireEvent.click(screen.getByRole("button", { name: "Save Changes" }));
     expect(onSaveMock).toHaveBeenCalledWith({
       ...mockSubscription,
       name: "Hulu",
