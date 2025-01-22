@@ -1,39 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { getSubscriptions, deleteSubscription, updateSubscription } from "../utils/Api";
+import {
+  getSubscriptions,
+  deleteSubscription,
+  updateSubscription,
+} from "../utils/Api";
 import SubscriptionCard from "../components/SubscriptionCard";
 import AddSubscriptionForm from "../components/AddSubscriptionForm";
 import { IoAdd, IoClose, IoDownload } from "react-icons/io5";
 import { exportToExcel } from "../utils/exportToExcel";
+import Loader from "../components/Loader";
 
 interface Subscription {
-    _id: string;
-    name: string;
-    cost: number;
-    billingFrequency: string;
-    renewalDate: string;
-    category: string;
-    notes?: string;
-  }
+  _id: string;
+  name: string;
+  cost: number;
+  billingFrequency: string;
+  renewalDate: string;
+  category: string;
+  notes?: string;
+}
 
 const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
-  const [filteredSubscriptions, setFilteredSubscriptions] = useState<Subscription[]>([]);
+  const [filteredSubscriptions, setFilteredSubscriptions] = useState<
+    Subscription[]
+  >([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [editingSubscriptionId, setEditingSubscriptionId] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     fetchSubscriptions();
   }, []);
 
   const fetchSubscriptions = async () => {
+    setIsLoading(true);
     const response = await getSubscriptions();
-    const subscriptionData: Subscription[] = response.data; 
+    const subscriptionData: Subscription[] = response.data;
     setSubscriptions(subscriptionData);
 
-    const uniqueCategories = [...new Set(subscriptionData.map((sub) => sub.category))];
+    const uniqueCategories = [
+      ...new Set(subscriptionData.map((sub) => sub.category)),
+    ];
     setCategories(uniqueCategories);
     setFilteredSubscriptions(subscriptionData);
+    setIsLoading(false);
   };
 
   const handleDelete = async (id: string) => {
@@ -51,9 +66,11 @@ const Dashboard = () => {
     setSelectedCategory(category);
 
     if (category === "") {
-      setFilteredSubscriptions(subscriptions); 
+      setFilteredSubscriptions(subscriptions);
     } else {
-      const filtered = subscriptions.filter((sub: any) => sub.category === category);
+      const filtered = subscriptions.filter(
+        (sub: any) => sub.category === category
+      );
       setFilteredSubscriptions(filtered);
     }
   };
@@ -62,9 +79,12 @@ const Dashboard = () => {
     exportToExcel(subscriptions, "subscriptions");
   };
 
+  const handleEditCard = (id: string | null) => {
+    setEditingSubscriptionId(id);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 lg:px-16">
-
       <header className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800">Subscriptions</h1>
         <div className="flex items-center space-x-4">
@@ -89,26 +109,32 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <section>
-        {filteredSubscriptions.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredSubscriptions.map((subscription: any) => (
-              <SubscriptionCard
-                key={subscription._id}
-                subscription={subscription}
-                onDelete={handleDelete}
-                onSave={handleSave}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="flex items-center justify-center py-20">
-            <p className="text-gray-500 text-lg">
-              No subscriptions found in this category.
-            </p>
-          </div>
-        )}
-      </section>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <section>
+          {filteredSubscriptions.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredSubscriptions.map((subscription: any) => (
+                <SubscriptionCard
+                  key={subscription._id}
+                  subscription={subscription}
+                  onDelete={handleDelete}
+                  onSave={handleSave}
+                  isEditingCard={editingSubscriptionId === subscription._id}
+                  onEditCard={handleEditCard}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center py-20">
+              <p className="text-gray-500 text-lg">
+                No subscriptions found in this category.
+              </p>
+            </div>
+          )}
+        </section>
+      )}
 
       <button
         className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
