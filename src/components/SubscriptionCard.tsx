@@ -13,14 +13,17 @@ interface SubscriptionCardProps {
   };
   onDelete: (id: string) => void;
   onSave: (updatedSubscription: any) => void;
+  isEditingCard: boolean;
+  onEditCard: (id: string | null) => void;
 }
 
 const SubscriptionCard = ({
   subscription,
   onDelete,
   onSave,
+  isEditingCard,
+  onEditCard,
 }: SubscriptionCardProps) => {
-  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(subscription);
   const [showNotesModal, setShowNotesModal] = useState(false);
 
@@ -31,12 +34,20 @@ const SubscriptionCard = ({
 
   const handleSave = () => {
     onSave(formData);
-    setIsEditing(false);
+    onEditCard(null);
+  };
+
+  const handleCancelEdit = () => {
+    onEditCard(null);
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md relative">
-      {isEditing ? (
+    <div
+      className={`bg-white p-4 rounded-lg shadow-md relative transition-all ${
+        isEditingCard ? "min-h-[400px]" : "min-h-[150px]"
+      }`}
+    >
+      {isEditingCard ? (
         <>
           <input
             type="text"
@@ -93,7 +104,7 @@ const SubscriptionCard = ({
             <button
               className="text-gray-500 hover:text-gray-700"
               aria-label="Cancel Edit"
-              onClick={() => setIsEditing(false)}
+              onClick={handleCancelEdit}
             >
               <IoClose size={24} />
             </button>
@@ -120,7 +131,7 @@ const SubscriptionCard = ({
             <button
               className="text-blue-500 hover:text-blue-700"
               aria-label="Edit Subscription"
-              onClick={() => setIsEditing(true)}
+              onClick={() => onEditCard(subscription._id)}
             >
               <IoPencil size={20} />
             </button>
