@@ -44,6 +44,7 @@ const SubscriptionCard = ({
             value={formData.name}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
+            aria-label="Edit Name"
           />
           <input
             type="number"
@@ -51,12 +52,14 @@ const SubscriptionCard = ({
             value={formData.cost}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
+            aria-label="Edit Cost"
           />
           <select
             name="billingFrequency"
             value={formData.billingFrequency}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
+            aria-label="Edit Billing Frequency"
           >
             <option value="monthly">Monthly</option>
             <option value="annual">Annual</option>
@@ -67,6 +70,7 @@ const SubscriptionCard = ({
             value={formData.renewalDate}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
+            aria-label="Edit Renewal Date"
           />
           <input
             type="text"
@@ -74,6 +78,7 @@ const SubscriptionCard = ({
             value={formData.category}
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
+            aria-label="Edit Category"
           />
           <textarea
             name="notes"
@@ -81,19 +86,22 @@ const SubscriptionCard = ({
             onChange={handleInputChange}
             className="w-full mb-2 p-2 border rounded"
             placeholder="Notes"
+            aria-label="Edit Notes"
           ></textarea>
           <div className="flex justify-between mt-4">
             <button
               className="text-green-500 hover:text-green-700"
+              aria-label="Save"
               onClick={handleSave}
             >
-              <IoPencil size={24} />
+              Save
             </button>
             <button
               className="text-gray-500 hover:text-gray-700"
+              aria-label="Cancel Edit"
               onClick={() => setIsEditing(false)}
             >
-              <IoClose size={24} />
+              Close
             </button>
           </div>
         </>
@@ -104,9 +112,10 @@ const SubscriptionCard = ({
             {subscription.notes && (
               <button
                 className="text-blue-500 hover:text-blue-700"
+                aria-label="View Notes"
                 onClick={() => setShowNotesModal(true)}
               >
-                <IoInformationCircleOutline size={24} />
+                View Notes
               </button>
             )}
           </div>
@@ -116,15 +125,17 @@ const SubscriptionCard = ({
           <div className="flex justify-between mt-4">
             <button
               className="text-blue-500 hover:text-blue-700"
+              aria-label="Edit Subscription"
               onClick={() => setIsEditing(true)}
             >
-              <IoPencil size={20} />
+              Edit Subscription
             </button>
             <button
               className="text-red-500 hover:text-red-700"
+              aria-label="Delete Subscription"
               onClick={() => onDelete(subscription._id)}
             >
-              <IoTrash size={20} />
+              Delete Subscription
             </button>
           </div>
         </>
@@ -135,9 +146,10 @@ const SubscriptionCard = ({
           <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
             <button
               className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+              aria-label="Close"
               onClick={() => setShowNotesModal(false)}
             >
-              <IoClose size={24} />
+              Close
             </button>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Notes</h3>
             <p className="text-gray-600">{subscription.notes}</p>

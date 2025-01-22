@@ -14,4 +14,9 @@ export default defineConfig({
       '/api': 'https://saas-subscription-manager.onrender.com', 
     },
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts', 
+  }
 })

@@ -73,7 +73,7 @@ const sendEmailReminder = async (subscription) => {
 };
 
 const scheduleRenewalReminders = () => {
-  cron.schedule("0 0 * * *", async () => {
+  cron.schedule("* * * * *", async () => {
     try {
       const today = new Date();
       const nextWeek = new Date();

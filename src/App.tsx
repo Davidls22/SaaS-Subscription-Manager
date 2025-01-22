@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter as DefaultRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import Analytics from "./pages/Analytics";
@@ -7,12 +7,12 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 
-function App() {
+function App({ Router = DefaultRouter }: { Router?: typeof DefaultRouter }) {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("token")
   );
 
-  const handleLogin = (token:any) => {
+  const handleLogin = (token: any) => {
     localStorage.setItem("token", token);
     setIsAuthenticated(true);
   };
@@ -24,7 +24,6 @@ function App() {
 
   return (
     <Router>
-      {/* Navigation Bar */}
       <nav className="p-4 bg-gray-100 shadow-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center">
@@ -65,16 +64,14 @@ function App() {
           </div>
         </div>
       </nav>
-  
+
       <main className="p-8 bg-gray-50 min-h-screen">
         <div className="max-w-7xl mx-auto">
           <Routes>
-            {/* Public Routes */}
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
-            {/* Private Routes */}
             <Route
               path="/"
               element={

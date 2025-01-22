@@ -40,7 +40,6 @@ const AddSubscriptionForm = ({ onSuccess }: AddSubscriptionFormProps) => {
         category,
         notes,
       });
-      alert("Subscription added successfully!");
       onSuccess();
       setFormData({
         name: "",
@@ -86,6 +85,7 @@ const AddSubscriptionForm = ({ onSuccess }: AddSubscriptionFormProps) => {
       <form
         onSubmit={handleSubmit}
         className="bg-white p-10 rounded-xl shadow-lg w-full max-w-lg"
+        role="form"
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           Add Subscription

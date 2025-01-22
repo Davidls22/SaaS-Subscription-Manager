@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-function ResetPassword() {
+function ResetPassword({ onNavigate }: { onNavigate?: (path: string) => void }) {
   const { token } = useParams();
-  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`https://saas-subscription-manager.onrender.com/api/reset-password/${token}`, {
+      const response = await fetch(`http://saas-subscription-manager.onrender.com/api/reset-password/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
@@ -18,7 +17,9 @@ function ResetPassword() {
 
       if (response.ok) {
         setMessage("Password reset successfully. Redirecting to login...");
-        setTimeout(() => navigate("/login"), 2000);
+        if (onNavigate) {
+          onNavigate("/login"); 
+        }
       } else {
         const errorData = await response.json();
         setMessage(errorData.error || "An error occurred");

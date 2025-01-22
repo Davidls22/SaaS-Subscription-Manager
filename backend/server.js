@@ -10,6 +10,7 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
+  "http://localhost:5173",
   "https://saas-subscription-manager-1.onrender.com",
   "https://saas-subscription-manager.onrender.com"
 ];
