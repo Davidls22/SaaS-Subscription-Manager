@@ -35,7 +35,7 @@ describe("Analytics Component", () => {
     render(<Analytics />);
     await waitFor(() => expect(getSubscriptions).toHaveBeenCalledTimes(1));
   
-    const totalSpend = screen.getByText((content, element) => {
+    const totalSpend = screen.getByText((_, element) => {
       if (!element) return false;
       const hasText = element.textContent?.includes("Total Spend (Monthly): £25.00");
       const childrenDontHaveText = Array.from(element.children).every(
@@ -53,9 +53,9 @@ describe("Analytics Component", () => {
     const annualButton = screen.getByLabelText("Annual View");
     fireEvent.click(annualButton);
   
-    const totalSpend = screen.getByText((content, element) => {
+    const totalSpend = screen.getByText((_, element) => {
       if (!element) return false;
-      const hasText = element.textContent?.includes("Total Spend (Annual): £300.00");
+      const hasText:any = element.textContent?.includes("Total Spend (Annual): £300.00");
       const childrenDontHaveText = Array.from(element.children).every(
         (child) => !child.textContent?.includes("Total Spend (Annual): £300.00")
       );

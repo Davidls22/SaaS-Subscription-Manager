@@ -6,7 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    " types": ["vitest", "@testing-library/jest-dom"],
+    "types": ["vitest", "@testing-library/jest-dom"],
       "strict": true,
       "esModuleInterop": true,
 
