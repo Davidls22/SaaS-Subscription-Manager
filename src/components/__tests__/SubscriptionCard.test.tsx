@@ -84,14 +84,11 @@ describe("SubscriptionCard", () => {
     );
   
     fireEvent.click(screen.getByRole("button", { name: "Edit Subscription" }));
-  
-    // Ensure the input fields are displayed correctly
+
     expect(screen.getByDisplayValue("Netflix")).toBeInTheDocument();
     expect(screen.getByDisplayValue("12.99")).toBeInTheDocument();
   
     fireEvent.click(screen.getByRole("button", { name: "Cancel Edit" }));
-  
-    // After canceling edit mode, check the "Netflix" text in the input field
     expect(screen.getByDisplayValue("Netflix")).toBeInTheDocument();
   });
 
