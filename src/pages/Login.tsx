@@ -22,7 +22,7 @@ function Login({ onLogin }: any) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         onLogin(data.token);
-        navigate("/");
+        navigate("/dashboard");
       } else {
         alert("Invalid login credentials");
       }
